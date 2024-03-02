@@ -1,0 +1,228 @@
+	<main>
+			<div class="layout">
+					<!-- Start of Navigation -->
+					<div class="navigation">
+					<div class="container">
+						<div class="inside">
+							<div class="nav nav-tab menu">
+								<button class="btn "><img class="avatar-xl" src="" alt="avatar"></button>
+			
+							</div>
+							<div class="nav nav-tab menu">
+								<a href="profileUser.php?id=<?=$user['id']?>">Retour</a>
+			
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- End of Navigation -->
+
+
+			
+			
+				<div class="main">
+				<?php
+					require_once ("views/connexion.php");
+
+					if (isset($_SESSION['username']) && isset($_SESSION['id']) )
+						{
+							if(isset($_GET['id']) && !empty($_GET['id'])){
+								$idRe=strip_tags($_GET['id']);
+								$sql='SELECT * FROM `users` WHERE `id`=:id';
+								$query=$connexion->prepare($sql);
+								$query->bindValue('id', $idRe);
+								$query->execute();
+								$user=$query->fetch();
+							}
+						}     
+						?> 
+					<div class="tab-content" id="nav-tabContent">
+						<!-- Start of Babble -->
+						<div class="babble tab-pane fade active show" id="list-chat" role="tabpanel" aria-labelledby="list-chat-list">
+							<!-- Start of Chat -->
+							<div class="chat" id="chat1">
+								<div class="top">
+									<div class="container">
+										<div class="col-md-12">
+											<div class="inside">
+												<a href="#"><img class="avatar-md" src="views/upload/<?php echo $user['image']; ?>" data-toggle="tooltip" data-placement="top" title="Keith" alt="avatar"></a>
+												<div class="status">
+													<i class="material-icons online">fiber_manual_record</i>
+												</div>
+												<div class="data">
+													<h5><a href="#"><?=$user["username"]?></a></h5>
+													<span></span>
+												</div>
+												
+											</div>
+										</div>
+									</div>
+								</div>
+
+							
+								<?php
+									
+									/*if(isset($_POST)){
+										if(isset($_POST['send']) && !empty($_POST['send']))
+										{
+											$mess=$_POST['send'];
+											$sql='INSERT INTO `message` (`message`,`idEnvoyeur`, `idRecepteur`) VALUES (:mess, :idEn,:idRe)';
+											$query=$connexion->prepare($sql);
+											$query->bindValue(':mess', $mess);
+											$query->bindValue(':idRe', $idRe);
+											$query->bindValue(':idEn', $_SESSION['id']);
+											$query->execute();
+										}
+									}
+									*/
+								?>
+										
+										<?php
+											$sq='SELECT * FROM `message` WHERE `idEnvoyeur`=:idEn AND `idRecepteur`=:idRe OR `idEnvoyeur`=:idE AND `idRecepteur`=:idR' ;
+											$query=$connexion->prepare($sq);
+											$query->bindValue(':idEn', $_SESSION['id']);
+											$query->bindValue(':idRe', $_GET['id']);
+											$query->bindValue(':idE', $_GET['id']);
+											$query->bindValue(':idR', $_SESSION['id']);
+
+											$query->execute();
+											$message=$query->fetch();
+
+										?>
+								<div class="content" id="content">
+									<div class="container">
+										<div class="col-md-12">
+									
+									
+											
+											
+											
+											
+											
+										<?php if($message['idRecepteur']==$_SESSION['id']) {?>
+											<div class="message me">
+
+												<div class="text-main">
+													<div class="text-group me">
+
+														<div class="text me">
+															<p><?=$message["message"]?></p>
+
+														</div>
+
+													</div>
+													<span><i class="material-icons">check</i>10:21 PM</span>
+												</div>
+
+											</div>
+											<?php } else if($message['idEnvoyeur']==$_GET['id']) {?>
+												<div class="message">
+												<img class="avatar-md" src="views/upload/<?php echo $users['image']; ?>" data-toggle="tooltip" data-placement="top" title="Keith" alt="avatar">
+												<div class="text-main">
+													<div class="text-group">
+														<div class="text">
+															<p><?=$message["message"]?></p>
+														</div>
+													</div>
+													<span><?=$message["time"]?></span>
+												</div>
+											</div>
+											<?php }?>
+
+
+
+											
+										</div>
+									</div>
+								</div>
+								<div class="container">
+									<div class="col-md-12">
+										<div class="bottom">
+										<form action="" method="post">
+											<form class="position-relative w-100">
+												<textarea class="form-control" name="send" placeholder="Taper un message..." rows="1"></textarea>
+												<button class="btn send disabled"><i class="material-icons">send</i></button>
+											</form>
+											
+										</form>
+											
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- End of Chat -->
+							
+						</div>
+						<!-- End of Babble -->
+					
+						
+					</div>
+				</div>
+			</div> <!-- Layout -->
+		</main>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<?foreach ($message as $messages){?>
+												<div class="message">
+													<img class="avatar-md" src="views/upload/<?php echo $users['image']; ?>" data-toggle="tooltip" data-placement="top" title="Keith" alt="avatar">
+													<div class="text-main">
+														<div class="text-group">
+															<div class="text">
+																<p><?=$messages["message"]?></p>
+															</div>
+														</div>
+														<span><?=$messages["time"]?></span>
+													</div>
+												</div>
+											<?php}?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        	foreach ($message as $messages) {
+							if($messages['idEnvoyeur']==$_SESSION['id']){?>
+								<p style="color:red"><?=$messages['message']?>;</p>
+							<?php
+							}else if($messages['idEnvoyeur']==$_GET['id']){?>
+								<p style="color:green"><?=$messages['message']?>;</p>
+							<?php
+							}
+						}
+						?>

@@ -1,0 +1,36 @@
+
+<?php
+		require_once ("views/connexion.php");
+
+		if (isset($_SESSION['username']) && isset($_SESSION['id']) )
+		{
+			
+			if(isset($_GET['id']) && !empty($_GET['id'])){
+				require_once('views/connexion.php');
+
+				$idRecepteur=strip_tags($_GET['id']);
+				$sql='SELECT * FROM `users` WHERE `id`=:id;';
+
+				$query=$connexion->prepare($sql);
+				$query->bindValue(':id', $idRecepteur, PDO::PARAM_INT);
+				$query->execute();
+
+				$users=$query->fetch();
+
+		}
+
+		require_once('views/connexion.php');
+
+		$idRecepteur=strip_tags($_GET['id']);
+  
+		 $sql='SELECT * FROM `message` WHERE `idEnvoyeur`=:idEnvoyeur AND `idRecepteur`=:idRecepteur;';
+		 $query=$connexion->prepare($sql);
+
+		 $query->bindValue(':idEnvoyeur', $id, PDO::PARAM_INT);
+		 $query->bindValue(':idRecepteur', $idRecepteur, PDO::PARAM_INT);
+		 
+		 $query->execute();
+		 $message=$query->fetchAll(PDO::FETCH_ASSOC);
+		
+ ?>  
+	

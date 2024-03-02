@@ -1,0 +1,231 @@
+
+<?php
+require_once ("php/views/connexion.php");
+$ide = $connexion->query('SELECT * FROM article  ORDER BY  id_article desc ');
+$panier=$connexion->query('SELECT * FROM panier_publ');
+$publier=$connexion->query('SELECT * FROM publier');
+
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+
+    <title>Sixteen Clothing HTML Template</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!--
+
+    TemplateMo 546 Sixteen Clothing
+
+    https://templatemo.com/tm-546-sixteen-clothing
+
+    -->
+
+    <!-- Additional CSS Files -->
+
+    <link rel="stylesheet" href="http://localhost/vintage/css/fontawesome.css">
+    <link rel="stylesheet" href="http://localhost/vintage/css/templatemo-sixteen.css">
+    <link rel="stylesheet" href="http://localhost/vintage/css/owl.css">
+    <link rel="stylesheet" href="http://localhost/vintage/css/index.css">
+<style>
+    .banniere{
+        background-image: url("assets/images/debarras_text.png");
+        background-repeat:no-repeat;
+        width:1500px;
+        height:400px;
+        background-position:bottom;
+
+    }
+</style>
+<!-- Header -->
+<header class="">
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="index.php"><h2>FREE<em>SHOPPING</em></h2></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="index.php"><ul><li><i class=" stars fa fa-home"></i></li></ul>
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="php/product.php">Articles</a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link" href="php/about.php">A propos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="php/login.php">Connexion</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="php/contact.php">Nous contacter</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+<div class="header">
+
+    <form class="form-inline" enctype="multipart/form-data" method="GET" action="php/rechercher_article.php" >
+        <input  type="search" placeholder="Search" class="input" name="recherche">
+        <button  type="submit" class="button"  ><span class="glyphicon glyphicon-search" style="font-size:20px;color:#6610f2;"></span></button>
+        <a href="php/login.php" class="second-button">vends tes articles</a>
+    </form>
+
+</div>
+
+<!-- Page Content -->
+<div class="page-heading about-heading header-text">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="text-content">
+                    <div class="inner-content">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h4>Vendre et achetez avec<em>free</em> shopping</h4>
+                                <p>free shopping vous aide a vendre les articles dont vous ne voulez plus utilisez</p>
+                            </div>
+                            <div class="col-md-4">
+                                <a href="php/login.php" class="filled-button">commencez une vente</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<body>
+
+<!-- ***** Preloader Start ***** -->
+<div id="preloader">
+    <div class="jumper">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+</div>
+<!-- ***** Preloader End ***** -->
+
+
+
+<!-- Banner Starts Here -->
+<div class="latest-products">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+            </div>
+
+            <?php while ($articles = $ide->fetch()){
+                $images = $connexion->prepare('SELECT * FROM image WHERE id_img=?');
+                $imagesResult = $images->execute(array($articles['id_img']));
+                $image = $images->fetch();
+
+                ?>
+                <div class="col-md-3">
+                <?php
+                            
+                            $id=strip_tags($articles['id']);
+                            $sql='SELECT * FROM `users` WHERE `id`=:id;';
+
+                            $query=$connexion->prepare($sql);
+                            $query->bindValue(':id', $id, PDO::PARAM_INT);
+                            $query->execute();
+
+                            $user=$query->fetch();
+                    ?>
+                    <h3><i class="fa fa-user"></i> <?=$user['username']?></h3>
+                    <div class="product-item">
+                        <a href="php/info_article.php?id_article=<?= $articles['id_article']?>"> <?php  echo "<img src='http://localhost/vintage/assets/images/".$image['img1']."' width='90' height='190'>"; ?></a>
+                        <div class="down-content">
+
+               
+                            <a href="#"><h4><?=$articles['titre']?></h4></a>
+                            <h6><?=$articles['prix']?><?php echo"FCFA";?></h6>
+                            <p><?=$articles['etat']?></p>
+                           
+                            
+                        </div>
+                    </div>
+                </div>
+<!--            <div class="col-sm-3">-->
+<!---->
+<!--                <div class="product-item">-->
+<!--                    <a href="php/info_article.php?id_article=--><?//= $articles['id_article']?><!--"> --><?php // echo "<img src='http://localhost/vintage/assets/images/".$image['img1']."' width='90' height='90'>"; ?><!--</a>-->
+<!--                    <div class="down-content">-->
+<!--                        <a href="#"><h4>--><?//=$articles['titre']?><!--</h4></a>-->
+<!--                        <h6>--><?//=$articles['prix']?><!----><?php //echo"FCFA";?><!--</h6>-->
+<!--                        <p>--><?//=$articles['etat']?><!--</p>-->
+<!---->
+<!--                        <span>Reviews (24)</span>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+            <?php    }?>
+<!-- Banner Ends Here -->
+        </div>
+    </div>
+
+
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="inner-content">
+                </div>
+                </div>
+        </div>
+    </div>
+</footer>
+
+
+<!-- Bootstrap core JavaScript -->
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+
+<!-- Additional Scripts -->
+<script src="http://localhost/vintage/js/custom.js"></script>
+<script src="http://localhost/vintage/js/owl.js"></script>
+<script src="http://localhost/vintage/js/slick.js"></script>
+<script src="http://localhost/vintage/js/isotope.js"></script>
+<script src="http://localhost/vintage/js/accordions.js"></script>
+
+
+<script language = "text/Javascript">
+    cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
+    function clearField(t){                   //declaring the array outside of the
+        if(! cleared[t.id]){                      // function makes it static and global
+            cleared[t.id] = 1;  // you could use true and false, but that's more typing
+            t.value='';         // with more chance of typos
+            t.style.color='#fff';
+        }
+    }
+</script>
+
+
+</body>
+
+</html>
+

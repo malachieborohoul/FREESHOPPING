@@ -1,0 +1,12 @@
+	<!-- Start of Navigation -->
+				<div class="navigation">
+					<div class="container">
+						<div class="inside">
+							<div class="nav nav-tab menu">
+								<button class="btn"><img class="avatar-xl" src="dist/img/avatars/avatar-male-1.jpg" alt="avatar"></button>
+			
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- End of Navigation -->

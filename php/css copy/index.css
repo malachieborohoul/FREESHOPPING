@@ -1,0 +1,85 @@
+body{
+
+}
+
+.input{
+    width:350px;
+    height:35px;
+    border-radius:10px 0px 0px 10px;
+    border-left:1px solid none;
+    margin-top:100px;
+    border:none;
+    margin-left:350px;
+    background-color:white;
+    border-top-left-radius:none;
+}
+.header{
+    height:150px;
+    background-color:#332f2f;
+    padding-left:50px;
+    padding:0 auto;
+}
+.btn-search{
+    margin-top:24px;
+    padding-right:25px;
+    margin-right:30px;
+    height:35px;
+}
+.button{
+    height:35px;
+    margin-top:100px;
+    border:none;
+    background-color:white;
+    border-radius:0px 10px 10px 0px;
+}
+.second-button{
+    margin-left:20px;
+    margin-top:100px;
+
+}
+
+.banniere{
+    background-image: url("assets/images/debarras_texte.jpg");
+    background-repeat:no-repeat;
+    width:1200px;
+    height:400px;
+    background-position:bottom;
+
+}
+.top-left{
+    height:150px;
+    width:400px;
+    background-color:white;
+    margin-left:50px;
+    border-radius:10px;
+    margin-top:60px;
+}
+.article{
+    margin-left: 500px;
+}
+
+.bttn{
+    width:200px;
+    background-color:#6610f2;
+    color:white;
+    margin-left:20px;
+    margin-top:20px;
+    font-size:15px;
+}
+img{
+    margin-left:35px;
+    margin-top:30px;
+}
+
+
+.bann{
+    background-image: url("assets/images/debarras_texte.jpg");
+}
+.titre{
+    color: black;
+}
+.nav{
+    font-size: 20px;
+    margin-top: 50px;
+    color: #1d2124;
+}
